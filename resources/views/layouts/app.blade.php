@@ -20,12 +20,12 @@
         <x-header-component />
     </header>
 
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen max-w-screen">
 
         <!-- Sidebar -->
         <x-sidebar-component />
 
-        <main class="max-w-full m-auto">
+        <main class="max-w-full">
         @yield('content')
          </main>
 
