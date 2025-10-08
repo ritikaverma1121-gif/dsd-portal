@@ -99,6 +99,172 @@
       </div>
     </div>
   </div>
+  <!-- Chart.js CDN -->
+  <div class="py-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          <!-- Job Posting Trends (Line Chart) -->
+          <div class="bg-white rounded-xl shadow-md p-6 h-72">
+              <h2 class="text-lg font-semibold mb-4">Job Posting Trends</h2>
+              <canvas id="jobPostingChart" class="w-full h-full"></canvas>
+          </div>
+
+
+          <!-- Applications Trends (Bar Chart) -->
+          <div class="bg-white rounded-xl shadow-md p-6 h-72">
+              <h2 class="text-lg font-semibold mb-4">Applications Trends</h2>
+              <canvas id="applicationsChart" class="w-full h-full"></canvas>
+          </div>
+
+      </div>
+  </div>
+  <div class="p-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+    <!-- Top Performing Recruiters -->
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-lg font-semibold mb-4">Top Performing Recruiters</h2>
+      <ul class="space-y-4">
+        <!-- Recruiter Item -->
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="bg-[#788c0c] text-white font-semibold w-12 h-12 rounded-full flex items-center justify-center text-sm">SJ</div>
+            <div>
+              <div class="font-semibold flex items-center gap-1">
+                <span>Sarah Johnson</span>
+                <span title="Top Recruiter">👑</span>
+              </div>
+              <div class="text-sm text-gray-500">TechCorp Inc.</div>
+            </div>
+          </div>
+          <span class="bg-[#788c0c] text-white text-sm font-medium px-3 py-1 rounded-full">42 hires</span>
+        </li>
+
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="bg-[#788c0c] text-white font-semibold w-12 h-12 rounded-full flex items-center justify-center text-sm">MC</div>
+            <div>
+              <div class="font-semibold">Michael Chen</div>
+              <div class="text-sm text-gray-500">InnovateLabs</div>
+            </div>
+          </div>
+          <span class="bg-[#788c0c] text-white text-sm font-medium px-3 py-1 rounded-full">38 hires</span>
+        </li>
+
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="bg-[#788c0c] text-white font-semibold w-12 h-12 rounded-full flex items-center justify-center text-sm">ER</div>
+            <div>
+              <div class="font-semibold">Emily Rodriguez</div>
+              <div class="text-sm text-gray-500">Global Ventures</div>
+            </div>
+          </div>
+          <span class="bg-[#788c0c] text-white text-sm font-medium px-3 py-1 rounded-full">35 hires</span>
+        </li>
+
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="bg-[#788c0c] text-white font-semibold w-12 h-12 rounded-full flex items-center justify-center text-sm">DK</div>
+            <div>
+              <div class="font-semibold">David Kim</div>
+              <div class="text-sm text-gray-500">StartupHub</div>
+            </div>
+          </div>
+          <span class="bg-[#788c0c] text-white text-sm font-medium px-3 py-1 rounded-full">31 hires</span>
+        </li>
+
+        <li class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="bg-[#788c0c] text-white font-semibold w-12 h-12 rounded-full flex items-center justify-center text-sm">JW</div>
+            <div>
+              <div class="font-semibold">Jessica Williams</div>
+              <div class="text-sm text-gray-500">Enterprise Solutions</div>
+            </div>
+          </div>
+          <span class="bg-[#788c0c] text-white text-sm font-medium px-3 py-1 rounded-full">28 hires</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Recent Notifications -->
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-lg font-semibold mb-4">Recent Notifications</h2>
+      <div class="space-y-4">
+        <!-- Notification Item -->
+        <div class="bg-gray-50 p-4 rounded-lg flex items-start gap-3">
+          <div class="text-[#788c0c] text-xl">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <div class="flex-1">
+            <div class="font-medium">New Recruiter Sign-up
+              <span class="ml-2 text-xs text-white bg-[#cdd296] px-2 py-0.5 rounded-full">New</span>
+            </div>
+            <div class="text-sm text-gray-600">Alex Thompson from DevCo joined the platform</div>
+            <div class="text-xs text-gray-400 mt-1">5 min ago</div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg flex items-start gap-3">
+          <div class="text-[#788c0c] text-xl">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="flex-1">
+            <div class="font-medium">Pending Approval
+              <span class="ml-2 text-xs text-white bg-[#788c0c] px-2 py-0.5 rounded-full">Action Required</span>
+            </div>
+            <div class="text-sm text-gray-600">3 recruiter applications awaiting review</div>
+            <div class="text-xs text-gray-400 mt-1">1 hour ago</div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg flex items-start gap-3">
+          <div class="text-[#788c0c] text-xl">
+            <i class="fas fa-bell"></i>
+          </div>
+          <div class="flex-1">
+            <div class="font-medium">System Update
+              <span class="ml-2 text-xs text-white bg-gray-400 px-2 py-0.5 rounded-full">Info</span>
+            </div>
+            <div class="text-sm text-gray-600">Platform maintenance scheduled for tonight</div>
+            <div class="text-xs text-gray-400 mt-1">2 hours ago</div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg flex items-start gap-3">
+          <div class="text-[#788c0c] text-xl">
+            <i class="fas fa-user-plus"></i>
+          </div>
+          <div class="flex-1">
+            <div class="font-medium">New Recruiter Sign-up
+              <span class="ml-2 text-xs text-white bg-[#cdd296] px-2 py-0.5 rounded-full">New</span>
+            </div>
+            <div class="text-sm text-gray-600">Maria Garcia from NextGen Tech registered</div>
+            <div class="text-xs text-gray-400 mt-1">3 hours ago</div>
+          </div>
+        </div>
+
+        <div class="bg-gray-50 p-4 rounded-lg flex items-start gap-3">
+          <div class="text-[#788c0c] text-xl">
+            <i class="fas fa-exclamation-circle"></i>
+          </div>
+          <div class="flex-1">
+            <div class="font-medium">Pending Approval
+              <span class="ml-2 text-xs text-white bg-[#788c0c] px-2 py-0.5 rounded-full">Action Required</span>
+            </div>
+            <div class="text-sm text-gray-600">7 new job postings need verification</div>
+            <div class="text-xs text-gray-400 mt-1">5 hours ago</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
 </section>
+
+@endsection
+@section('jscontent')
+<!-- Chart.js Scripts -->
 
 @endsection

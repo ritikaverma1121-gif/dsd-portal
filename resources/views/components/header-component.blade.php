@@ -1,4 +1,4 @@
-<header class=" text-gray-200 shadow px-6 py-4 flex items-center justify-between bg-white">
+<header class="text-gray-200 shadow px-6 py-4 flex items-center justify-between bg-white">
     <!-- Left: Logo -->
     <div class="flex items-center space-x-3">
         <img src="{{ asset('images/logo.png') }}" alt="Admin Portal Logo" class="h-10 w-10">
@@ -24,14 +24,18 @@
             <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-[#82921b] rounded-full"></span>
         </button>
 
-        <!-- Admin Info -->
+        <!-- Dynamic User Info -->
         <div class="flex items-center space-x-3">
             <div class="text-right">
-                <p class="text-sm font-medium text-black">Admin User</p>
-                <p class="text-xs text-[#82921b]">admin@portal.com</p>
+                <p class="text-sm font-medium text-black">
+                    {{ Auth::user()->name }}
+                </p>
+                <p class="text-xs text-[#82921b]">
+                    {{ Auth::user()->email }}
+                </p>
             </div>
             <div class="h-10 w-10 bg-[#82921b] rounded-full flex items-center justify-center font-bold text-white">
-                AD
+                {{ strtoupper(substr(Auth::user()->name,0,2)) }}
             </div>
         </div>
     </div>

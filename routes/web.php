@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;        
+use App\Http\Controllers\PermissionController;   
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\JobController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,16 +20,11 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::prefix('admin')->middleware(['auth:admin'])->group(function() {
-    // Roles CRUD
-    Route::resource('roles', RoleController::class);
 
-    // Permissions CRUD
+Route::middleware('auth')->group(function () {
     Route::resource('permissions', PermissionController::class);
-    
+    Route::resource('roles', RoleController::class);
+    Route::resource('jobs', JobController::class)->except(['show']);
 });
-// Route::middleware(['role:super_admin'])->group(function() {
-//     Route::resource('roles', RoleController::class);
-//     Route::resource('permissions', PermissionController::class);
-// });
+
 require __DIR__.'/auth.php';
