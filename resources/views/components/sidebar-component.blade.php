@@ -2,14 +2,14 @@
    <aside class="h-100vh w-64 bg-white text-black flex flex-col justify-between">
     <!-- Middle: Menu -->
     <nav class=" flex-1 p-4 space-y-2">
-        <a href="#"
+        <a href="{{ route('dashboard') }}"
            class="flex items-center text-white px-3 py-2 rounded-lg bg-[#82921b]  transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
             Dashboard
         </a>
-        <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-200 transition justify-between">
+        <a href="{{ route('admin.recruiters.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-200 transition justify-between">
             <div class="flex items-center gap-4">
                <i class="fa-solid fa-user-plus"></i>
                 <span class=""></span>Recruiters
@@ -28,7 +28,7 @@
                             Candidates
                         </div>
         </a>
-        <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-200 transition">
+        <a href="{{ route('jobs.index') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-200 transition">
                     <div class="flex items-center gap-8">
                         <i class="fa-solid fa-briefcase"></i>
                             Jobs

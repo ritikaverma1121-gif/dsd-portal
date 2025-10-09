@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('phone')->nullable();
             $table->string('resume')->nullable(); // file path
-            $table->json('skills')->nullable();
+            $table->text('skills')->nullable();
             $table->integer('experience')->nullable(); // years
             $table->timestamps();
         });

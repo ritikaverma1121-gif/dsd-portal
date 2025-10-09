@@ -28,7 +28,7 @@
         <div class="flex items-center space-x-3">
             <div class="text-right">
                 <p class="text-sm font-medium text-black">
-                    {{ Auth::user()->name }}
+                    {{ Auth::user()->name}}
                 </p>
                 <p class="text-xs text-[#82921b]">
                     {{ Auth::user()->email }}
