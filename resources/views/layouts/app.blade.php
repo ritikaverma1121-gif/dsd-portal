@@ -20,7 +20,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body class="font-sans antialiased bg-white">
+<body class="font-sans bg-gray-100 antialiased ">
 
     <!-- Header -->
     <header class="bg-white shadow sticky top-0 z-50">

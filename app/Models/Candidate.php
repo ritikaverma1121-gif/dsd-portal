@@ -10,14 +10,12 @@ class Candidate extends Model
     use HasFactory;
 
     protected $fillable = [
-    'name',
-    'email',
-    'password',
-    'phone',
-    'resume',
-    'skills',      // as string
-    'experience',
-];
+        'user_id',
+        'phone',
+        'resume',
+        'skills',
+        'experience',
+    ];
 
     protected $casts = [
         'skills' => 'array',
@@ -27,4 +25,9 @@ class Candidate extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function applications()
+{
+    return $this->hasMany(Application::class);
+}
+
 }

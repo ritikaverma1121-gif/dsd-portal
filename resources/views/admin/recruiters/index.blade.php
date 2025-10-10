@@ -12,30 +12,23 @@
             <a href="{{ route('admin.recruiters.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                 <i class="bi bi-plus-circle mr-1"></i> Add Recruiter
             </a>
-            <a href="#" class="bg-gray-200 text-gray-800 px-4 py-2 rounded hover:bg-gray-300 transition">
-                <i class="bi bi-download mr-1"></i> Export Data
-            </a>
         </div>
     </div>
 
     <!-- Dashboard Cards -->
     <div class="grid grid-cols-3 gap-4 mb-6">
-        <div class="p-4 border rounded text-center">
+        <div class="p-4 border rounded text-center bg-white shadow">
             <div class="text-gray-500">Total Recruiters</div>
             <div class="text-xl font-bold">{{ \App\Models\Recruiter::count() }}</div>
         </div>
-        <div class="p-4 border rounded text-center">
+        <div class="p-4 border rounded text-center bg-white shadow">
             <div class="text-gray-500">Active Recruiters</div>
-            <div class="text-xl font-bold">{{ \App\Models\Recruiter::whereHas('user', fn($q)=>$q->where('status','active'))->count() }}</div>
+            <div class="text-xl font-bold">{{ \App\Models\Recruiter::where('status','active')->count() }}</div>
         </div>
-        <div class="p-4 border rounded text-center">
+        <div class="p-4 border rounded text-center bg-white shadow">
             <div class="text-gray-500">Pending Approval</div>
-            <div class="text-xl font-bold">{{ \App\Models\Recruiter::whereHas('user', fn($q)=>$q->where('status','inactive'))->count() }}</div>
+            <div class="text-xl font-bold">{{ \App\Models\Recruiter::where('status','inactive')->count() }}</div>
         </div>
-        <!-- <div class="p-4 border rounded text-center">
-            <div class="text-gray-500">Rejected</div>
-            <div class="text-xl font-bold">42</div>
-        </div> -->
     </div>
 
     <!-- Search & Filter -->
@@ -45,7 +38,7 @@
         <form method="GET" action="{{ route('admin.recruiters.index') }}" id="filterForm"
             class="flex w-full md:w-2/3 items-center border border-gray-300 rounded-lg overflow-hidden shadow-sm focus-within:ring-2 focus-within:ring-blue-300 bg-white">
             <span class="px-3 text-gray-500">
-            <i class="fa fa-search" aria-hidden="true"></i>
+                <i class="fa fa-search" aria-hidden="true"></i>
             </span>
             <input type="text" name="search" value="{{ request('search') }}" placeholder="Search recruiter, email, or company..."
                 class="flex-1 px-3 py-2 text-sm outline-none" />
@@ -61,7 +54,6 @@
                 <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
             </select>
 
-            <!-- Clear Filters Button -->
             @if(request('search') || request('status'))
             <a href="{{ route('admin.recruiters.index') }}"
                 class="bg-gray-200 text-gray-700 text-sm px-3 py-2 rounded-lg hover:bg-gray-300 transition-all duration-200 flex items-center gap-1">
@@ -70,7 +62,6 @@
             @endif
         </div>
     </div>
-
 
     <!-- Recruiter Table -->
     <div class="overflow-x-auto">
@@ -96,8 +87,8 @@
                     <td class="py-2 px-4">{{ $recruiter->company_name }}</td>
                     <td class="py-2 px-4">{{ $recruiter->designation }}</td>
                     <td class="py-2 px-4">
-                        <span class="status-badge px-2 py-1 rounded-full text-white text-sm {{ $recruiter->user->status == 'inactive' ? 'bg-red-500' : 'bg-gray-400' }}">
-                            {{ ucfirst($recruiter->user->status) }}
+                        <span class="status-badge px-2 py-1 rounded-full text-white text-sm {{ $recruiter->status == 'inactive' ? 'bg-red-500' : 'bg-green-400' }}">
+                            {{ ucfirst($recruiter->status) }}
                         </span>
                     </td>
                     <td class="py-2 px-4">{{ $recruiter->created_at->format('d M Y') }}</td>
@@ -159,7 +150,6 @@ document.querySelectorAll('.update-status').forEach(btn => {
                 })
                 .then(res => res.json())
                 .then(data => {
-                    // Update status badge dynamically
                     const row = document.querySelector(`#row-${id}`);
                     const badge = row.querySelector('.status-badge');
                     badge.textContent = status === 'active' ? 'Active' : 'Inactive';

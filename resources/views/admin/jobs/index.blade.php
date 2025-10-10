@@ -11,16 +11,16 @@
         <a href="{{ route('admin.jobs.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded">Create Job</a>
     </div>
 
-    <div class="grid grid-cols-4 gap-4 mb-6">
-        <div class="p-4 border rounded text-center">
+    <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="p-4 border rounded text-center bg-white shadow">
             <div class="text-gray-500">Total Jobs</div>
             <div class="text-xl font-bold">{{ \App\Models\Job::count() }}</div>
         </div>
-        <div class="p-4 border rounded text-center">
+        <div class="p-4 border rounded text-center bg-white shadow">
             <div class="text-gray-500">Active Jobs</div>
             <div class="text-xl font-bold">{{ \App\Models\Job::where('status', 'active')->count() }}</div>
         </div>
-        <div class="p-4 border rounded text-center">
+        <div class="p-4 border rounded text-center bg-white shadow">
             <div class="text-gray-500">Closed Jobs</div>
             <div class="text-xl font-bold">{{ \App\Models\Job::where('status', 'closed')->count() }}</div>
         </div>
@@ -72,7 +72,6 @@
                 </td>
                 <td class="py-2 px-4">{{ $job->deadline }}</td>
                 <td class="py-2 px-4">
-                    <a href="{{ route('admin.jobs.edit', $job) }}" class="text-blue-500">Edit</a>
                     <form action="{{ route('admin.jobs.destroy', $job) }}" method="POST" class="inline-block">
                         @csrf @method('DELETE')
                         <button class="text-red-500 ml-2" onclick="return confirm('Delete this job?')">Delete</button>

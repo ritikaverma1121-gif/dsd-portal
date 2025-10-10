@@ -7,6 +7,7 @@ use App\Models\Recruiter;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class RecruiterController extends Controller
 {
@@ -54,11 +55,12 @@ class RecruiterController extends Controller
             'designation'   => 'nullable|string|max:255',
         ]);
 
+        $password = 'Test@12345';
         $user = User::create([
             'name'  => $request->name,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
-            'status' => 'active',
+            'password' => Hash::make($password),
         ]);
 
         $user->assignRole('Recruiter');
@@ -73,13 +75,31 @@ class RecruiterController extends Controller
     }
 
     // Approve or reject recruiter
-        public function updateStatus(Request $request, $id)
-    {
-        $recruiter = Recruiter::findOrFail($id);
-        $recruiter->user->update(['status' => $request->status]);
+   // Approve or reject recruiter
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|in:active,inactive',
+    ]);
 
-        return response()->json(['success' => true]);
-    }
+    $recruiter = Recruiter::findOrFail($id);
+    $recruiter->status = $request->status; // Update recruiter table status
+    $recruiter->save();
+
+    // Optional: return updated counts for dashboard cards
+    $counts = [
+        'total' => Recruiter::count(),
+        'active' => Recruiter::where('status', 'active')->count(),
+        'inactive' => Recruiter::where('status', 'inactive')->count(),
+    ];
+
+    return response()->json([
+        'success' => true,
+        'status' => $recruiter->status,
+        'counts' => $counts
+    ]);
+}
+
 
 
     // Delete recruiter

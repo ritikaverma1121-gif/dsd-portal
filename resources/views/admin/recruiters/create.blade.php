@@ -1,81 +1,62 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gray-100 py-10">
-    <div class="bg-white rounded-2xl shadow-lg w-full max-w-4xl">
-        <div class="bg-blue-600 text-white rounded-t-2xl px-6 py-4">
-            <h2 class="text-xl font-semibold">Add Recruiter</h2>
-        </div>
-        <div class="p-6">
-            <form method="POST" action="{{ route('admin.recruiters.store') }}" class="space-y-6">
-                @csrf
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-
-                    <!-- Full Name -->
-                    <div class="relative">
-                        <input type="text" name="name" id="name" placeholder=" " required
-                               class="peer block w-full rounded-lg border border-gray-300 px-3 pt-5 pb-2 text-gray-900 placeholder-transparent focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none">
-                        <label for="name"
-                               class="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-gray-700 peer-focus:text-sm">
-                            Full Name
-                        </label>
-                    </div>
-
-                    <!-- Email -->
-                    <div class="relative">
-                        <input type="email" name="email" id="email" placeholder=" " required
-                               class="peer block w-full rounded-lg border border-gray-300 px-3 pt-5 pb-2 text-gray-900 placeholder-transparent focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none">
-                        <label for="email"
-                               class="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-gray-700 peer-focus:text-sm">
-                            Email
-                        </label>
-                    </div>
-
-                    <!-- Phone Number -->
-                    <div class="relative">
-                        <input type="text" name="phone_number" id="phone_number" placeholder=" "
-                               class="peer block w-full rounded-lg border border-gray-300 px-3 pt-5 pb-2 text-gray-900 placeholder-transparent focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none">
-                        <label for="phone_number"
-                               class="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-gray-700 peer-focus:text-sm">
-                            Phone Number
-                        </label>
-                    </div>
-
-                    <!-- Company Name -->
-                    <div class="relative">
-                        <input type="text" name="company_name" id="company_name" placeholder=" " required
-                               class="peer block w-full rounded-lg border border-gray-300 px-3 pt-5 pb-2 text-gray-900 placeholder-transparent focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none">
-                        <label for="company_name"
-                               class="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-gray-700 peer-focus:text-sm">
-                            Company Name
-                        </label>
-                    </div>
-
-                    <!-- Designation -->
-                    <div class="relative">
-                        <input type="text" name="designation" id="designation" placeholder=" "
-                               class="peer block w-full rounded-lg border border-gray-300 px-3 pt-5 pb-2 text-gray-900 placeholder-transparent focus:border-blue-500 focus:ring focus:ring-blue-200 focus:outline-none">
-                        <label for="designation"
-                               class="absolute left-3 top-2.5 text-gray-500 text-sm transition-all peer-placeholder-shown:top-5 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-base peer-focus:top-2.5 peer-focus:text-gray-700 peer-focus:text-sm">
-                            Designation
-                        </label>
-                    </div>
-
-                </div>
-
-                <!-- Buttons -->
-                <div class="flex justify-end gap-4 mt-4">
-                    <button type="submit"
-                            class="bg-green-600 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-700 transition">
-                        Save
-                    </button>
-                    <a href="{{ route('admin.recruiters.index') }}"
-                       class="bg-gray-200 text-gray-800 px-6 py-2 rounded-lg shadow-md hover:bg-gray-300 transition">
-                        Cancel
-                    </a>
-                </div>
-            </form>
-        </div>
+<div class="container mx-auto p-4">
+    <!-- Header -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-800">Add Recruiter</h1>
+        <p class="text-gray-500">Fill in recruiter details</p>
     </div>
+
+    <form method="POST" action="{{ route('admin.recruiters.store') }}" class="bg-white shadow rounded-lg p-6 space-y-4">
+        @csrf
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Full Name -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Full Name</label>
+                <input type="text" name="name" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:outline-none" value="{{ old('name') }}">
+                @error('name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Email -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Email</label>
+                <input type="email" name="email" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:outline-none" value="{{ old('email') }}">
+                @error('email') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Phone Number</label>
+                <input type="text" name="phone_number" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:outline-none" value="{{ old('phone_number') }}">
+                @error('phone_number') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Company Name -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Company Name</label>
+                <input type="text" name="company_name" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:outline-none" value="{{ old('company_name') }}">
+                @error('company_name') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+
+            <!-- Designation -->
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">Designation</label>
+                <input type="text" name="designation" class="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-300 focus:outline-none" value="{{ old('designation') }}">
+                @error('designation') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-4 flex justify-center gap-4">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition font-medium">
+                Create Recruiter
+            </button>
+            <a href="{{ route('admin.recruiters.index') }}" class="bg-gray-200 text-gray-800 px-6 py-2 rounded hover:bg-gray-300 transition font-medium">
+                Cancel
+            </a>
+        </div>
+    </form>
 </div>
 @endsection

@@ -7,10 +7,11 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Admin\RecruiterController;
 use App\Http\Controllers\Admin\CandidateController;
-
+use App\Http\Controllers\Admin\ApplicationController;
+use App\Http\Controllers\Admin\ReportController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
@@ -27,13 +28,31 @@ Route::middleware('auth')->group(function () {
     Route::resource('permissions', PermissionController::class);
     Route::resource('roles', RoleController::class);
 });
-Route::prefix('admin')->name('admin.')->group(function () {
+
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+
+    // Recruiters
     Route::resource('recruiters', RecruiterController::class);
-    Route::post('/admin/recruiters/{id}/status', [App\Http\Controllers\Admin\RecruiterController::class, 'updateStatus'])
-    ->name('admin.recruiters.updateStatus');
-    Route::post('recruiters/{id}/status', [RecruiterController::class, 'updateStatus'])->name('recruiters.updateStatus');
+    Route::post('recruiters/{id}/status', [RecruiterController::class, 'updateStatus'])
+        ->name('recruiters.updateStatus');
+
+    // Candidates
     Route::resource('candidates', CandidateController::class);
+    Route::get('candidates/{candidate}/resume', [CandidateController::class, 'downloadResume'])
+        ->name('candidates.resume');
+
+    // Jobs
     Route::resource('jobs', JobController::class)->except(['show']);
+
+    // Applications
+    Route::get('applications', [ApplicationController::class, 'index'])->name('applications.index');
+    Route::post('applications/{id}/status', [ApplicationController::class, 'updateStatus'])
+        ->name('applications.updateStatus');
+    Route::post('admin/applications', [App\Http\Controllers\Admin\ApplicationController::class, 'store'])
+    ->name('applications.store');
+
+    // Reports
+    Route::get('reports', [ReportController::class, 'index'])->name('reports.index');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

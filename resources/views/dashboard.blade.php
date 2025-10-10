@@ -18,13 +18,10 @@
       <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
         <div>
           <h3 class="text-gray-700 font-medium">Total Recruiters</h3>
-          <p class="text-3xl font-bold text-gray-900 mt-2">248</p>
-          <p class="text-green-600 text-sm mt-1">+12% from last month</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2">{{ \App\Models\Recruiter::count() }}</p>
         </div>
         <div class="bg-lime-700 text-white p-3 rounded-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-3-3h-2m0 5H7a2 2 0 01-2-2v-5a2 2 0 012-2h3l2-3 2 3h3a2 2 0 012 2v5a2 2 0 01-2 2z" />
-          </svg>
+                  <i class="fa fa-user-plus" aria-hidden="true"></i>
         </div>
       </div>
 
@@ -32,13 +29,10 @@
       <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
         <div>
           <h3 class="text-gray-700 font-medium">Total Candidates</h3>
-          <p class="text-3xl font-bold text-gray-900 mt-2">1,847</p>
-          <p class="text-green-600 text-sm mt-1">+18% from last month</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2">{{ \App\Models\Candidate::count() }}</p>
         </div>
         <div class="bg-lime-700 text-white p-3 rounded-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A6 6 0 1118.878 6.196M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
+         <i class="fa fa-user" aria-hidden="true"></i>
         </div>
       </div>
 
@@ -46,13 +40,11 @@
       <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
         <div>
           <h3 class="text-gray-700 font-medium">Total Jobs Posted</h3>
-          <p class="text-3xl font-bold text-gray-900 mt-2">342</p>
-          <p class="text-green-600 text-sm mt-1">+8% from last month</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2">{{ \App\Models\Job::count() }}</p>
         </div>
         <div class="bg-lime-700 text-white p-3 rounded-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18m-9 5h9" />
-          </svg>
+                          <i class="fa-solid fa-briefcase"></i>
+
         </div>
       </div>
 
@@ -60,13 +52,12 @@
       <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
         <div>
           <h3 class="text-gray-700 font-medium">Active Jobs</h3>
-          <p class="text-3xl font-bold text-gray-900 mt-2">127</p>
-          <p class="text-green-600 text-sm mt-1">+5% from last month</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2">{{ \App\Models\Job::where('status', 'active')->count() }}</p>
         </div>
         <div class="bg-lime-700 text-white p-3 rounded-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-          </svg>
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-check-fill" viewBox="0 0 16 16">
+          <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m-1.146 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
+        </svg>
         </div>
       </div>
 
@@ -74,12 +65,12 @@
       <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
         <div>
           <h3 class="text-gray-700 font-medium">Applications Received</h3>
-          <p class="text-3xl font-bold text-gray-900 mt-2">3,624</p>
-          <p class="text-green-600 text-sm mt-1">+24% from last month</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2">{{ \App\Models\Application::count() }}</</p>
         </div>
         <div class="bg-lime-700 text-white p-3 rounded-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16h8m-8-4h8m-8-4h8M4 6h16M4 18h16" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-window" viewBox="0 0 16 16">
+            <path d="M2.5 4a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m2-.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m1 .5a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+            <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm13 2v2H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1M2 14a1 1 0 0 1-1-1V6h14v7a1 1 0 0 1-1 1z"/>
           </svg>
         </div>
       </div>
@@ -88,12 +79,11 @@
       <div class="bg-white rounded-xl shadow p-6 flex items-center justify-between">
         <div>
           <h3 class="text-gray-700 font-medium">Shortlisted / Hired</h3>
-          <p class="text-3xl font-bold text-gray-900 mt-2">289</p>
-          <p class="text-green-600 text-sm mt-1">+15% from last month</p>
+          <p class="text-3xl font-bold text-gray-900 mt-2">{{ \App\Models\Application::where('status', 'Shortlisted')->count() }}</p>
         </div>
         <div class="bg-lime-700 text-white p-3 rounded-lg">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
           </svg>
         </div>
       </div>

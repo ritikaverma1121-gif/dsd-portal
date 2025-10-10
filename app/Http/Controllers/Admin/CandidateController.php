@@ -6,27 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Candidate;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class CandidateController extends Controller
 {
     // List candidates
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->input('search');
-
-        $candidates = Candidate::with('user')
-            ->when($search, function ($query) use ($search) {
-                $query->whereHas('user', function ($q) use ($search) {
-                    $q->where('name', 'like', "%$search%")
-                      ->orWhere('email', 'like', "%$search%");
-                });
-            })
-            ->latest()
-            ->paginate(10);
-
-        return view('admin.candidates.index', compact('candidates', 'search'));
+        $candidates = Candidate::with('user')->latest()->paginate(10);
+        return view('admin.candidates.index', compact('candidates'));
     }
 
     // Show create form
@@ -36,106 +25,67 @@ class CandidateController extends Controller
     }
 
     // Store candidate
-   public function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name'       => 'required|string|max:255',
-            'email'      => 'required|email|unique:candidates,email',
-            'password'   => 'required|string|min:6',
+            'email'      => 'required|email|unique:users,email',
             'phone'      => 'nullable|string|max:15',
+            'password'   => 'nullable|string|min:6',
             'resume'     => 'nullable|file|mimes:pdf,doc,docx|max:2048',
             'skills'     => 'nullable|string',
             'experience' => 'nullable|integer|min:0',
         ]);
 
-        $resumePath = $request->file('resume') ? $request->file('resume')->store('resumes') : null;
+        // Use provided password or default
+        $password = $request->password ?? 'Test@12345';
 
-        Candidate::create([
-            'name'       => $request->name,
-            'email'      => $request->email,
-            'password'   => bcrypt($request->password),
-            'phone'      => $request->phone,
-            'resume'     => $resumePath,
-            'skills'     => $request->skills,  // just store as string
-            'experience' => $request->experience,
-        ]);
-
-        return redirect()->route('admin.candidates.index')->with('success', 'Candidate created successfully!');
-    }
-
-
-    // Show candidate
-    public function show($id)
-    {
-        $candidate = Candidate::with('user')->findOrFail($id);
-        return view('admin.candidates.show', compact('candidate'));
-    }
-
-    // Show edit form
-    public function edit($id)
-    {
-        $candidate = Candidate::with('user')->findOrFail($id);
-        return view('admin.candidates.edit', compact('candidate'));
-    }
-
-    // Update candidate
-    public function update(Request $request, $id)
-    {
-        $candidate = Candidate::findOrFail($id);
-        $user = $candidate->user;
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$user->id,
-            'phone' => 'nullable|string|max:15',
-            'resume' => 'nullable|file|mimes:pdf,doc,docx',
-            'skills' => 'nullable|array',
-            'experience' => 'nullable|integer',
-        ]);
-
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
+        // 1️⃣ Create the user
+        $user = User::create([
+            'name'         => $request->name,
+            'email'        => $request->email,
             'phone_number' => $request->phone,
+            'password'     => Hash::make($password),
         ]);
 
-        if ($request->hasFile('resume')) {
-            if ($candidate->resume) Storage::delete($candidate->resume);
-            $candidate->resume = $request->file('resume')->store('resumes');
+        // Optional: assign role if using Spatie roles
+        if (method_exists($user, 'assignRole')) {
+            $user->assignRole('Candidate');
         }
 
-        $candidate->update([
-            'skills' => $request->skills ? json_encode($request->skills) : null,
+        // 2️⃣ Handle resume upload
+        $resumePath = $request->hasFile('resume')
+            ? $request->file('resume')->store('resumes', 'public')
+            : null;
+
+        // 3️⃣ Create candidate record
+        Candidate::create([
+            'user_id'    => $user->id,
+            'resume'     => $resumePath,
+            'skills'     => $request->skills,
             'experience' => $request->experience,
         ]);
 
-        return redirect()->route('admin.candidates.index')->with('success', 'Candidate updated successfully!');
+        return redirect()->route('admin.candidates.index')
+            ->with('success', 'Candidate added successfully!');
     }
-
-    // Delete candidate
-    public function destroy($id)
+    public function downloadResume(Candidate $candidate, Request $request)
     {
-        $candidate = Candidate::findOrFail($id);
-        if ($candidate->resume) Storage::delete($candidate->resume);
-        $candidate->user->delete();
-        $candidate->delete();
+        if (!$candidate->resume || !Storage::disk('public')->exists($candidate->resume)) {
+            abort(404, 'Resume not found.');
+        }
 
-        return redirect()->route('admin.candidates.index')->with('success', 'Candidate deleted successfully!');
-    }
-    public function updateStatus($id, Request $request)
-    {
-        $request->validate([
-            'status' => 'required|in:active,inactive',
-        ]);
+        $filePath = storage_path('app/public/' . $candidate->resume);
+        $fileName = $candidate->user->name . '_resume.' . pathinfo($candidate->resume, PATHINFO_EXTENSION);
 
-        $recruiter = \App\Models\Recruiter::with('user')->findOrFail($id);
-        $recruiter->user->status = $request->status;
-        $recruiter->user->save();
+        if ($request->query('download')) {
+            return response()->download($filePath, $fileName);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Status updated successfully!',
+        return response()->file($filePath, [
+            'Content-Disposition' => 'inline; filename="' . $fileName . '"'
         ]);
     }
+
 
 }

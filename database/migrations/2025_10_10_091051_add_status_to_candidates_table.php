@@ -10,23 +10,19 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-        {
-            Schema::table('users', function (Blueprint $table) {
-                if (!Schema::hasColumn('users', 'status')) {
-                    $table->string('status')->default('inactive')->after('type');
-                }
-            });
-        }
-
+    {
+        Schema::table('candidates', function (Blueprint $table) {
+            $table->enum('status', ['Pending', 'Shortlisted', 'Rejected'])->default('Pending');
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('candidates', function (Blueprint $table) {
             $table->dropColumn('status');
         });
     }
-
 };
